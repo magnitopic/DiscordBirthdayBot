@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, InteractionType } = require('discord.js');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -39,6 +39,13 @@ client.on('interactionCreate', interaction => {
 	interaction.fields.fields.forEach(e => {
 		console.log(e.value);
 	});
+});
+
+client.on('interactionCreate', async interaction => {
+	if (interaction.type !== InteractionType.ModalSubmit) return;
+	if (interaction.customId === 'myModal') {
+		await interaction.reply({ content: 'Your submission was received successfully!' });
+	}
 });
 
 client.login(token);
