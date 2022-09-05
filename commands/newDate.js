@@ -9,28 +9,23 @@ const {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("test")
-		.setDescription("Add a new Birthday."),
+		.setName("newBirthdayReminder")
+		.setDescription("Add a new Birthday reminder."),
 	async execute(interaction) {
 		const modal = new ModalBuilder()
-			.setCustomId("myModal")
-			.setTitle("New ");
+			.setCustomId("newBirthday")
+			.setTitle("New birthday reminder!");
 
 		const favoriteColorInput = new TextInputBuilder()
 			.setCustomId("favoriteColorInput")
-			// The label is the prompt the user sees for this input
-			.setLabel("What's your favorite color?")
-			// Short means only a single line of text
+			.setLabel("Name of the birthday boy")
 			.setStyle(TextInputStyle.Short);
 
 		const hobbiesInput = new TextInputBuilder()
 			.setCustomId("hobbiesInput")
-			.setLabel("What's some of your favorite hobbies?")
-			// Paragraph means multiple lines of text.
-			.setStyle(TextInputStyle.Paragraph);
+			.setLabel("Birthday date. dd/mm")
+			.setStyle(TextInputStyle.Short);
 
-		// An action row only holds one text input,
-		// so you need one action row per text input.
 		const firstActionRow = new ActionRowBuilder().addComponents(
 			favoriteColorInput
 		);
@@ -38,10 +33,8 @@ module.exports = {
 			hobbiesInput
 		);
 
-		// Add inputs to the modal
 		modal.addComponents(firstActionRow, secondActionRow);
 
-		// Show the modal to the user
 		await interaction.showModal(modal);
 	},
 };
