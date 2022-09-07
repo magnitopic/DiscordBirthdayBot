@@ -26,6 +26,8 @@ client.once("ready", () => {
 	console.log("Ready!");
 });
 
+const checkDateFormat = function (input) {};
+
 client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 
@@ -44,19 +46,22 @@ client.on("interactionCreate", async (interaction) => {
 	}
 });
 
-client.on("interactionCreate", (interaction) => {
-	if (!interaction.isModalSubmit()) return;
-	interaction.fields.fields.forEach((e) => {
-		console.log(e.value);
-	});
-});
-
 client.on("interactionCreate", async (interaction) => {
 	if (interaction.type !== InteractionType.ModalSubmit) return;
-	if (interaction.customId === "myModal") {
-		await interaction.reply({
-			content: "Your submission was received successfully!",
+	if (interaction.customId === "newBirthday") {
+		var test;
+		console.log("-----New Birthday-----");
+		interaction.fields.fields.forEach((e) => {
+			console.log(e.value);
+			test = e.value;
 		});
+		if (checkDateFormat(test)) {
+			await interaction.reply(
+				"Your submission was received successfully!"
+			);
+		} else {
+			await interaction.reply("Date format invalid.");
+		}
 	}
 });
 
